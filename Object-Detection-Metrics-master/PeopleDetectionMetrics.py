@@ -9,7 +9,6 @@ def getBoundingBoxes():
     """Read txt files containing bounding boxes (ground truth and detections)."""
     allBoundingBoxes = BoundingBoxes()
     import glob
-    import os
     # Read ground truths
     currentPath = os.path.dirname(os.path.abspath(__file__))
     folderGT = os.path.join(currentPath, 'groundtruths')

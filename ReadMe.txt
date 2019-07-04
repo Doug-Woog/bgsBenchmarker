@@ -32,3 +32,4 @@ I am currently unsure as to why it throws this error (Any suggestions would be g
 - An example .csv is included
 - Make sure there is both a 'groundtruths' and a 'detections' folder which can be accessed by 'PeopleDetectionMetrics.py' and 'Model_Testing.py'
 - Make sure to go through the 2 python files and assign the relavent folders to their respective variables
+- MixtureOfGaussianV2 model is the cv2.createBackgroundSubtractorMOG2() model but it does not yield the same results as it has been assigned different hyper-parameters such as learning rate
