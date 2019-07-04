@@ -5,7 +5,7 @@ from imutils.video import FPS
 import sys
 import csv
 from PeopleDetectionMetrics import calculate_metrics
-bgs_dir = "C:\\Users\Daniel\\bgslibrary\\" #bgslibrary directory
+bgs_dir = "C:\\...\bgslibrary\\" #bgslibrary directory
 data_root =  os.path.join( os.path.dirname( __file__ ), '..' )
 sys.path.insert(0,data_root)
 sys.path.insert(0, bgs_dir)
