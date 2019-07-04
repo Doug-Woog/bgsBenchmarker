@@ -1,0 +1,9 @@
+Requirement List:
+- Python 3+
+- bgslibrary (https://github.com/andrewssobral/bgslibrary) Last commit: https://github.com/andrewssobral/bgslibrary/commit/7fb89288689bb83cd96350672bbf894d0ef5459d
+- Object-Detection-Metrics (https://github.com/rafaelpadilla/Object-Detection-Metrics) Version: Object Detection Metrics - Pascal VOC 0.1 (beta)
+- OpenCV (3.6.4 used)
+- cv2 Python module (4.1.0 used)
+- NumPy (1.16.3 used)
+- csv python module (1.0 used)
+- imutils (0.5.2 used)

@@ -5,10 +5,10 @@ from imutils.video import FPS
 import sys
 import csv
 from PeopleDetectionMetrics import calculate_metrics
-data_root = 'C:\WEX with Ben\PETS Data'
-sys.path.insert(0, data_root)
-sys.path.insert(0,"C:\\Users\Daniel\\bgslibrary\\bgslibrary")
-#sys.path.insert(0,'C:\\Users\\Daniel\\bgslibrary\\bgslibrary\\build')
+bgs_dir = "C:\\Users\Daniel\\bgslibrary\\bgslibrary"
+data_root =  os.path.join( os.path.dirname( __file__ ), '..' )
+sys.path.insert(0,data_root)
+sys.path.insert(0, bgs_dir)
 from MaskPostProcessing import MaskPostProcessing
 from BoundingBoxUtilities import BoundingBoxUtilities as bbox_utils
 from VisualizationTools import VisualizationTools as visualize
@@ -16,6 +16,7 @@ import bgs
 INPUT_FRAME_SHAPE = (270, 360, 3)
 INPUT_FRAME_W = 360
 INPUT_FRAME_H = 270
+detection_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'detections')
 
 def pretrain_on_background_vid(fgbg,PRETRAINING_NUMBER_OF_FRAMES,display=True,mog=False):
     initial_background_vid = cv2.VideoCapture(os.path.join(data_root,'S0_BG_View_001_Time_13-32-bestmatch.mp4'))
@@ -88,7 +89,7 @@ def train_model(model,write=False,display=True,mog=False):
         fgmask_enhanced2, boxes2 = MaskPostProcessing.findContours(fgmask_enhanced2, lower_area=0, upper_area=np.inf)
         """
         if write == True:
-            with open("C:\\WEX with Ben\PETS Data\Object-Detection-Metrics-master\detections\\frame"+str(frame_num)+".txt",'w') as f:
+            with open(detection_folder+"\frame"+str(frame_num)+".txt",'w') as f:
                 for box in boxes:
                     f.write("Person "+'1 '+str(box[0])+' '+str(box[1])+' '+str(box[2])+' '+str(box[3])+'\n')
 
@@ -110,11 +111,11 @@ def train_model(model,write=False,display=True,mog=False):
             visualize.drawBoxes(img2, boxes2)
             cv2.imshow('Boxed Mask Mixture', img2)
             """
-            k = cv2.waitKey()
+            k = cv2.waitKey(1)
     
             if k == ord('q'):
-                cv2.waitKey(1)
-                #break
+                #cv2.waitKey(1)
+                break
     
         fps_manager.update()
         frame_num+=1
@@ -144,18 +145,18 @@ def test(models,IOU,WithMOG=True,AP=False):
             results["Headers"].append("Recall (IOU = "+str(thresh)+")")
             
         for model in a.readline()[1:-1].split("', '"): #Removed T2FMRF_UM model
-            if model[:2] != "LB" and model[:5] != "Multi" and model != "VuMeter":
-                results[model] = []
-                model_test = getattr(bgs, model)() 
-                model_test = pretrain_on_background_vid(model_test,100,display=False)
-                results[model].append(train_model(model_test,write=True,display=True))
-                for threshold in IOU:
-                    if AP == True:
-                        for result in calculate_metrics(IOUThresh=threshold):
-                            results[model].append(result)
-                    else:
-                        for result in calculate_metrics(IOUThresh=threshold)[-2:]:
-                            results[model].append(result)
+            #if model[:2] != "LB" and model[:5] != "Multi" and model != "VuMeter":
+            results[model] = []
+            model_test = getattr(bgs, model)() 
+            model_test = pretrain_on_background_vid(model_test,100,display=False)
+            results[model].append(train_model(model_test,write=True,display=True))
+            for threshold in IOU:
+                if AP == True:
+                    for result in calculate_metrics(IOUThresh=threshold):
+                        results[model].append(result)
+                else:
+                    for result in calculate_metrics(IOUThresh=threshold)[-2:]:
+                        results[model].append(result)
                 #print(results[model])
     if WithMOG==True:
         mog_model = cv2.createBackgroundSubtractorMOG2( history=200,
@@ -168,7 +169,7 @@ def test(models,IOU,WithMOG=True,AP=False):
             for result in calculate_metrics(threshold):
                 results["BackgroundSubtractorMOG2"].append(result)
 
-    with open("AAATest_Results IOU Threshold ="+str(IOU)+"AP="+str(AP)+".csv", "w",newline='') as outfile:
+    with open("Test_Results IOU Threshold ="+str(IOU)+"AP="+str(AP)+".csv", "w",newline='') as outfile:
        writer = csv.writer(outfile)
        writer.writerow(results.keys())
        writer.writerows(zip(*results.values()))

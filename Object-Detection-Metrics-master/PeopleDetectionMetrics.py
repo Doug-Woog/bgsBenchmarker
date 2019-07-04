@@ -122,7 +122,7 @@ def getBoundingBoxes():
     return allBoundingBoxes,groundtruthboxes,detectionboxes
 
 
-def createImages(dictGroundTruth, dictDetected):
+def createImages(dictGroundTruth, dictDetected): #This function is not maintained and so will likely not work.
     """Create representative images with bounding boxes."""
     import numpy as np
     import cv2
@@ -130,19 +130,16 @@ def createImages(dictGroundTruth, dictDetected):
     width = 360
     height = 270
     # Loop through the dictionary with ground truth detections
-    data_root = 'C:\WEX with Ben\PETS Data'
-    foreground_vid = cv2.VideoCapture(os.path.join(data_root, 'S2_L1_Time_12-34_View_001_2fps.mp4'))
+    foreground_vid = cv2.VideoCapture(os.path.join(os.path.join( os.path.dirname( __file__ ), '..' ), 'S2_L1_Time_12-34_View_001_2fps.mp4'))
     for key in range(1,397):
 
         ret, img = foreground_vid.read()
         # This is the safe way to exit loop if end of video/problem with frame
         if (not ret) or (img is None):
             break
-        """
         if img.shape != (270, 360, 3):
             img = cv2.resize(img, (INPUT_FRAME_W, INPUT_FRAME_H))
-            assert img.shape == (270, 360, 3)"""
-        #image = np.zeros((height, width, 3), np.uint8)
+            assert img.shape == (270, 360, 3)
         gt_boundingboxes = dictGroundTruth[("frame"+str(key))]
         img = gt_boundingboxes.drawAllBoundingBoxes(img,("frame"+str(key)))
         detection_boundingboxes = dictDetected[("frame"+str(key))]
@@ -151,9 +148,8 @@ def createImages(dictGroundTruth, dictDetected):
         cv2.imshow("All boxes", img)
         cv2.waitKey()
 
-
-#boundingboxes,dictGroundTruth,dictDetected = getBoundingBoxes()
 # Uncomment the line below to generate images based on the bounding boxes
+#boundingboxes,dictGroundTruth,dictDetected = getBoundingBoxes()
 #createImages(dictGroundTruth, dictDetected)
 # Create an evaluator object in order to obtain the metrics
 
@@ -175,12 +171,9 @@ def calculate_metrics(IOUThresh = 0.5):
         average_precision = mc['AP']
         ipre = mc['interpolated precision']
         irec = mc['interpolated recall']
-        # Print AP per class
-        #print(len(precision))
-        print("Precision: "+str(precision[-1]))
-        print("Recall: "+str(recall[-1]))
+        print("Precision: "+str(precision[-1])) #True Precision Value
+        print("Recall: "+str(recall[-1])) #True Recall Value
         return  average_precision, precision[-1], recall[-1],
         #print('%s: %f' % (c, average_precision))
         #print("\nRecall Average ="+str(numpy.mean(mc['recall'])))
 
-#calculate_metrics(IOUThresh = 0.5)
