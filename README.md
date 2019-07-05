@@ -31,7 +31,7 @@ I am currently unsure as to why it throws this error (Any suggestions would be g
 - A text file called "Available bgs models.txt" is included which can be inputted into test() and lists all the bgs models currently available from bgslibrary (Apart from T2FMRF_UM as that one does not work)
 - When evaluating the precision and recall, the first 20 frames are omitted which can be changed in the 'PeopleDetectionMetrics.py' script
 - The referenced PETS2009 videos are not included but can be found online
-- An example .csv is included
+- 2 example .csv files are included: One with the results for all working models and one with just the results from the models highlighted in this [paper](https://www.dropbox.com/s/u8tkmxq56jzqajp/cviu2014sobral%20%281%29.pdf?dl=0)
 - Make sure there is both a 'groundtruths' and a 'detections' folder which can be accessed by 'PeopleDetectionMetrics.py' and 'Model_Testing.py'
 - Make sure to go through the 2 python files and assign the relavent folders to their respective variables (There is only one that should need setting which is bgs_dir in 'Model_Testing.py')
 - MixtureOfGaussianV2 model is the cv2.createBackgroundSubtractorMOG2() model but it does not yield the same results as it has been assigned different hyper-parameters such as learning rate
