@@ -1,0 +1,60 @@
+﻿DPPratiMediod:
+* High FPS (600-700)
+* Quick to adapt with little noise
+* Not too quick
+DPWrenGA:
+* High FPS (Around 600)
+* Little noise
+* Can be slow to adapt
+DPZivkovicAGMM::
+* Medium FPS (Around 300-400)
+* Little Noise
+* Took a while to adjust to slight background changes
+FrameDifference:
+* Extremely High FPS (3000-4000)
+* Low Noise
+* People are often not solid foreground (They are hollow)
+* Quick to adapt
+* Background is very similar to input video
+* Very sensitive
+LBMixtureOfGaussians:
+* Low FPS (Around 250)
+* Some noise (Lots for a brief period after background change)
+* Pretty quick to adapt
+* Noise around people’s feet
+MixtureOfGaussianV2:
+* Medium FPS (Around 300)
+* Medium Noise
+* Very quick to adapt
+SigmaDelta:
+* Medium FPS (Around 300)
+* Some noise
+* Medium fast to adapt
+* Background black for some reason
+TwoPoints:
+* Very High FPS (Around 1200)
+* Some Noise
+* Slow to adapt
+* People are solid
+* Background takes a long time to adjust
+* Background black for some reason
+ViBe:
+* Very High FPS (Around 1200)
+* Little Noise
+* Slow to adapt
+* People are solid (Not hollow or broken up)
+* Background takes a long time to adjust
+* Background black for some reason
+VuMeter:
+* Medium FPS (Around 400)
+* Fast to adapt
+* No noise
+* People are blobs
+* Blobs can be too broken up
+* Background is greyscale
+WeightedMovingMean:
+* Low FPS (Around 250)
+* Little noise
+* Quick to adapt
+* People can double up
+* People can be hollow
